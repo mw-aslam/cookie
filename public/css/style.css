@@ -1,0 +1,160 @@
+/* ── Цвета тем. data-theme ставит сервер из cookie, меняет theme.js ── */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --text: #16181d;
+  --muted: #5d6470;
+  --border: rgba(0, 0, 0, 0.1);
+  --accent: #3b5bdb;
+  --accent-text: #ffffff;
+  --error: #c92a2a;
+  --success: #2b8a3e;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --surface: #181b21;
+  --text: #e8eaee;
+  --muted: #9aa1ad;
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #748ffc;
+  --accent-text: #0f1115;
+  --error: #ff8787;
+  --success: #69db7c;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ── База ── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 200ms ease-out, color 200ms ease-out;
+}
+
+h1 { margin: 0 0 4px; font-size: 1.6rem; text-wrap: balance; }
+a { color: var(--accent); }
+code { font-size: 0.9em; padding: 1px 5px; border-radius: 4px; background: var(--border); }
+.muted { color: var(--muted); margin: 0; text-wrap: pretty; }
+.center { text-align: center; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Шапка ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.topbar__actions { display: flex; gap: 8px; }
+.brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
+
+/* ── Страница и карточка ── */
+.page {
+  display: grid;
+  place-items: center;
+  padding: 48px 16px;
+}
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* ── Форма ── */
+.form { display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-weight: 500; }
+.field small { font-weight: 400; font-size: 0.85rem; }
+.field input {
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.form__message { margin: 0; font-size: 0.95rem; color: var(--error); }
+.form__message[data-type='success'] { color: var(--success); }
+
+/* ── Кнопки ── */
+.btn,
+.theme-toggle {
+  min-height: 44px;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition-property: transform, background-color, border-color, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+.btn:active,
+.theme-toggle:active { transform: scale(0.97); }
+
+.btn--primary { border: 0; background: var(--accent); color: var(--accent-text); }
+.btn--primary:hover { opacity: 0.9; }
+.btn--primary:disabled { opacity: 0.6; cursor: progress; }
+
+.btn--ghost,
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+.btn--ghost:hover,
+.theme-toggle:hover { background: var(--border); }
+
+/* ── Переключатель темы: солнце / луна на CSS ── */
+.theme-toggle { display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; }
+.theme-toggle__label { min-width: 2.6em; text-align: left; }
+.theme-toggle__icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f59f00; /* солнце */
+  box-shadow: 0 0 0 3px color-mix(in srgb, #f59f00 30%, transparent);
+  transition: box-shadow 200ms ease-out, background-color 200ms ease-out;
+}
+[data-theme='dark'] .theme-toggle__icon {
+  background: transparent; /* луна: полумесяц через тень */
+  box-shadow: inset -5px -3px 0 0 #dbe4ff;
+}
+
+/* ── Список на главной ── */
+.facts { margin: 20px 0 0; padding-left: 20px; color: var(--muted); }
+.facts li + li { margin-top: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- Сервер (server.js → renderPage) подставляет в data-theme значение light/dark из cookie -->
+<html lang="ru" data-theme="__THEME__">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Cookie</a>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Тёмная тема">
+      <span class="theme-toggle__icon" aria-hidden="true"></span>
+      <span class="theme-toggle__label">Light</span>
+    </button>
+  </header>
+
+  <main class="page">
+    <form class="card form" data-auth="login" novalidate>
+      <h1>Вход</h1>
+      <p class="muted">Войдите в свой аккаунт</p>
+
+      <label class="field">
+        <span>Email</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+
+      <label class="field">
+        <span>Пароль</span>
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+
+      <p class="form__message" role="alert" hidden></p>
+
+      <button class="btn btn--primary" type="submit">Войти</button>
+      <p class="muted center">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+    </form>
+  </main>
+
+  <script src="/js/theme.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="__THEME__">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Главная</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Cookie</a>
+    <div class="topbar__actions">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Тёмная тема">
+        <span class="theme-toggle__icon" aria-hidden="true"></span>
+        <span class="theme-toggle__label">Light</span>
+      </button>
+      <button id="logout" class="btn btn--ghost" type="button">Выйти</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Вы вошли</h1>
+      <p class="muted">Аккаунт: <strong id="user-email">…</strong></p>
+      <ul class="facts">
+        <li>Сессия хранится в MongoDB (коллекция <code>sessions</code>) — обновите страницу, вход не пропадёт.</li>
+        <li>Тема хранится в cookie <code>theme</code> — она останется даже после выхода и закрытия вкладки.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/js/theme.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="__THEME__">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Cookie</a>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Тёмная тема">
+      <span class="theme-toggle__icon" aria-hidden="true"></span>
+      <span class="theme-toggle__label">Light</span>
+    </button>
+  </header>
+
+  <main class="page">
+    <form class="card form" data-auth="register" novalidate>
+      <h1>Регистрация</h1>
+      <p class="muted">Создайте аккаунт за минуту</p>
+
+      <label class="field">
+        <span>Email</span>
+        <input name="email" type="email" autocomplete="email" required>
+      </label>
+
+      <label class="field">
+        <span>Пароль</span>
+        <input name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="pw-hint">
+        <small id="pw-hint" class="muted">Минимум 8 символов</small>
+      </label>
+
+      <label class="field">
+        <span>Повторите пароль</span>
+        <input name="confirm" type="password" autocomplete="new-password" required>
+      </label>
+
+      <p class="form__message" role="alert" hidden></p>
+
+      <button class="btn btn--primary" type="submit">Создать аккаунт</button>
+      <p class="muted center">Уже есть аккаунт? <a href="/login">Войти</a></p>
+    </form>
+  </main>
+
+  <script src="/js/theme.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>
