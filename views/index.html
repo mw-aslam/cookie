@@ -23,7 +23,7 @@
       <h1>Вы вошли</h1>
       <p class="muted">Аккаунт: <strong id="user-email">…</strong></p>
       <ul class="facts">
-        <li>Сессия хранится в MongoDB (коллекция <code>sessions</code>) — обновите страницу, вход не пропадёт.</li>
+        <li>Вход по JWT: <code>accessToken</code> живёт 3 минуты, <code>refreshToken</code> — 7 дней (httpOnly cookie). Access обновляется сам.</li>
         <li>Тема хранится в cookie <code>theme</code> — она останется даже после выхода и закрытия вкладки.</li>
       </ul>
     </section>

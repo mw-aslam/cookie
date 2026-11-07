@@ -6,7 +6,7 @@ async function api(url, options = {}) {
     method: options.method || 'GET',
     headers: { 'Content-Type': 'application/json' },
     body: options.body ? JSON.stringify(options.body) : undefined,
-    credentials: 'same-origin', // браузер отправит cookie сессии "sid"
+    credentials: 'same-origin', // браузер отправит cookie accessToken / refreshToken
   });
   const data = await res.json().catch(() => ({}));
   return { ok: res.ok, status: res.status, data };
@@ -34,6 +34,7 @@ if (form) {
     event.preventDefault();
     showMessage(message, '');
 
+    const name = mode === 'register' ? form.name.value.trim() : undefined;
     const email = form.email.value.trim();
     const password = form.password.value;
 
@@ -48,7 +49,7 @@ if (form) {
     try {
       const { ok, data } = await api(`/api/auth/${mode}`, {
         method: 'POST',
-        body: { email, password },
+        body: { name, email, password },
       });
       if (!ok) {
         showMessage(message, data.error || 'Что-то пошло не так');
@@ -69,10 +70,10 @@ const userEmail = document.getElementById('user-email');
 if (userEmail) {
   api('/api/auth/me').then(({ ok, data }) => {
     if (!ok) {
-      location.href = '/login'; // сессия истекла
+      location.href = '/login'; // токены недействительны
       return;
     }
-    userEmail.textContent = data.user.email;
+    userEmail.textContent = `${data.user.name} (${data.user.email})`;
   });
 }
 
