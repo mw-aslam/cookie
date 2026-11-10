@@ -6,6 +6,8 @@ const fs = require('fs');
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const { requireAuthPage, redirectIfLoggedIn } = require('./middleware/auth');
@@ -26,6 +28,23 @@ const isProd = NODE_ENV === 'production';
 const app = express();
 
 if (isProd) app.set('trust proxy', 1); // нужно для secure-cookie за прокси (Render, Railway, Nginx)
+
+// ── Безопасность: HTTP-заголовки (CSP, HSTS, X-Frame-Options и др.) ──
+app.use(helmet());
+
+// ── CORS: разрешены только origin'ы из CORS_ORIGINS (через запятую) ──
+// Чужие сайты не получат CORS-заголовков, и браузер не отдаст им ответ.
+const allowedOrigins = (process.env.CORS_ORIGINS || `http://localhost:${PORT}`)
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, cb) => cb(null, !origin || allowedOrigins.includes(origin)),
+    credentials: true, // нужно, чтобы cookie с JWT ходили с разрешённых origin'ов
+  })
+);
 
 // ── Базовые мидлвары ──
 app.use(express.json({ limit: '10kb' }));
